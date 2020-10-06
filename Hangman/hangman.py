@@ -1,11 +1,13 @@
 import random
 from nltk.corpus import words
-word_list = words.words()
+word_list = words.words() # Making a list of all the words using nltk package
 
+# Method to generate a word for the game
 def getWord():
 	word=random.choice(word_list)
 	return word.upper()
 
+# Method to start the game
 def play(word):
 	wordCompletion="_"*len(word)
 	guessed=False
@@ -19,13 +21,13 @@ def play(word):
 	while not guessed and tries>0:
 		guess=input("Please guess a letter or a word").upper()
 		if(len(guess)==1 and guess.isalpha()):
-			if(guess in guessedLetters):
+			if(guess in guessedLetters): # The letter is already guessed
 				print("You have already guessed this letter: ",guess)
-			elif(guess not in word):
+			elif(guess not in word): # The letter is not present in the answer
 				print(guess," is not in word.")
-				tries-=1
+				tries-=1 # Reducing the number of tries
 				guessedLetters.append(guess)
-			else:
+			else: # Correct guess
 				print("Good Job! ",guess," is in the word.")
 				guessedLetters.append(guess)
 				wordAsList=list(wordCompletion)
@@ -36,13 +38,13 @@ def play(word):
 				if("_" not in wordCompletion):
 					guessed=True
 		elif(len(guess)==len(word) and guess.isalpha()):
-			if(guess in guessedWords):
+			if(guess in guessedWords): # The word is already guessed
 				print("You have already guessed this word: ",guess)
-			elif(guess!=word):
+			elif(guess!=word): # Incorrect answer
 				print(guess," is not the word.")
-				tries-=1
+				tries-=1 # Reducing the number of attempts
 				guessedWords.append(guess)
-			else:
+			else: # Correct answer
 				guessed=True
 				wordCompletion=word
 		else:
@@ -56,6 +58,7 @@ def play(word):
 		print("Sorry, you ran out of tries. The word was ",word,". Maybe next time!")
 
 
+# A method to display the status of the Hangman according to the number of tries left
 def displayHangman(tries):
     stages=[  # final state: head, torso, both arms, and both legs
                 """
